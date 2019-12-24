@@ -1,6 +1,7 @@
 package com.lambo.onlineretailers.service;
 
 import com.lambo.onlineretailers.entity.User;
+import org.springframework.data.repository.query.Param;
 
 /**
  * @ClassName: IUserService
@@ -11,5 +12,9 @@ import com.lambo.onlineretailers.entity.User;
  */
 public interface IUserService {
     User save(User user);
+
+    String findQuestionByUsername(String username);
+
+    public String findByUsernameAndQuestionAndAnswer(String username,String question,String answer) ;
 
 }

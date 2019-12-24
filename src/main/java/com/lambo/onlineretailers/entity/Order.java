@@ -16,7 +16,7 @@ import java.util.Date;
  * @Version: 1.0
  */
 @Entity
-@Table
+@Table(name = "t_order")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

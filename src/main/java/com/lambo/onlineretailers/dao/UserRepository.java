@@ -28,9 +28,9 @@ public interface UserRepository extends CrudRepository<User, Integer> {
     String findQuestionByUsername(@Param("username") String username);
 
     @Query(" select  count(1) from User where username =:username and question=:question and answer=:answer")
-    int countByUsernameAndQuestionAndAnswer(User user);
+    int countByUsernameAndQuestionAndAnswer(String username,String question,String answer);
 
-    void updatePasswordByUsername(String newPassoword,String username);
+   // void updatePasswordByUsername(String newPassoword,String username);
 
     int countByPasswordAndId(String password,String id);
 

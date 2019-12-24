@@ -2,6 +2,9 @@ package com.lambo.onlineretailers.common;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.lambo.onlineretailers.error.LamboException;
+import lombok.Data;
+
+import java.io.Serializable;
 
 /**
  * @ClassName: ServerResponse
@@ -11,7 +14,8 @@ import com.lambo.onlineretailers.error.LamboException;
  * @Version: 1.0
  */
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
-public class ServerResponse<T> {
+@Data
+public class ServerResponse<T>  {
 
     private int code;
 
@@ -34,7 +38,7 @@ public class ServerResponse<T> {
     }
 
     public static <T> ServerResponse<T> success(T data) {
-        return new ServerResponse<>(data);
+        return new ServerResponse(data);
     }
 
     public static ServerResponse error(ResponseCode responseCode) {

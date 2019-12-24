@@ -18,7 +18,7 @@ public class GlobeExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     @ResponseBody
-    public ServerResponse handlerExceptiop(Exception ex) {
+    public ServerResponse handlerException(Exception ex) {
         if (ex instanceof LamboException) {
             LamboException lamboException = (LamboException) ex;
             return ServerResponse.error(lamboException);
