@@ -31,12 +31,6 @@ public class UserCController {
     @Autowired
     private IUserService userService;
 
-    @GetMapping(value = "forget_get_question")
-    public ServerResponse forgetGetQuestion(@RequestParam("username") String username) {
-        AssertUtil.isEmpty(username, "username");
-        return ServerResponse.success(userService.findQuestionByUsername(username));
-    }
-
     @PostMapping(value = "/register")
     public ServerResponse register(@Validated @RequestBody UserDTO userDTO) {
         return ServerResponse.success(userService.register(userDTO));
@@ -48,41 +42,38 @@ public class UserCController {
         String password = jsonObject.getString("password");
         AssertUtil.isEmpty(username, "username");
         AssertUtil.isEmpty(password, "password");
-        UserDTO userDTO = userService.login(username, password);
-        if (userDTO != null) {
-            // todo
-            CookieUtil.setToken(response);
-        }
-        return ServerResponse.success(userService.login(username, password));
+
+        return ServerResponse.success(userService.login(username, password, response));
     }
 
     @GetMapping(value = "/logout")
-    public ServerResponse logout(HttpServletResponse response) {
-        // todo 移除缓存中的token
-        CookieUtil.removeToken(response);
+    public ServerResponse logout(
+            @CookieValue(value = Constants.COOKIE_TOKEN, required = false) String token,
+            HttpServletResponse response, UserDTO userDTO) {
+        userService.logout(response, token);
         return ServerResponse.success();
     }
-
 
     //登录后获取用户信息
-    @RequestMapping(value = "get_user_info.do", method = RequestMethod.POST)
+    @RequestMapping(value = "get_user_info", method = RequestMethod.GET)
     @ResponseBody
-    public ServerResponse<UserDTO> getUserInfo(HttpServletRequest request) {
-        Cookie[] cookies = request.getCookies();
-        String token = null;
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals(Constants.COOKIE_TOKEN)) {
-                token = cookie.getValue();
-                break;
-            }
-        }
-        if (StringUtils.isBlank(token)) {
-            throw new LamboException(ResponseCode.USER_HAS_NOT_LOGIN);
-        }
-        return ServerResponse.success();
+    public ServerResponse<UserDTO> getUserInfo(HttpServletRequest request, UserDTO userDTO) {
+        return ServerResponse.success(userDTO);
 
     }
+    //登录状态的重置密码
+    @RequestMapping(value = "reset_password", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse<String> restPassword(HttpServletRequest request,HttpServletResponse response,
+                                               UserDTO userDTO, @RequestBody JSONObject jsonObject) {
 
+        String passwordOld = jsonObject.getString("password_old");
+        String passwordNew = jsonObject.getString("password_new");
+        AssertUtil.isEmpty(passwordOld, "password_old");
+        AssertUtil.isEmpty(passwordNew, "password_new");
+        userService.resetPassword(request,response,userDTO, passwordOld, passwordNew);
+        return ServerResponse.success();
+    }
     //提交问题答案
     @RequestMapping(value = "forget_check_answer.do", method = RequestMethod.POST)
     @ResponseBody
@@ -90,23 +81,10 @@ public class UserCController {
         return ServerResponse.success(userService.checkAnswer(username, question, answer));
     }
 
-    //登录状态的重置密码
-    @RequestMapping(value = "rest_password", method = RequestMethod.POST)
-    @ResponseBody
-    public ServerResponse<String> restPassword(HttpServletRequest request, String passwordOld, String passwordNew) {
-        Cookie[] cookies = request.getCookies();
-        String token = null;
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals(Constants.COOKIE_TOKEN)) {
-                token = cookie.getValue();
-                break;
-            }
-        }
-        if (StringUtils.isBlank(token)) {
-            throw new LamboException(ResponseCode.USER_HAS_NOT_LOGIN);
-        }
-        // todo
-        return ServerResponse.success();
+    @GetMapping(value = "forget_get_question")
+    public ServerResponse forgetGetQuestion(@RequestParam("username") String username) {
+        AssertUtil.isEmpty(username, "username");
+        return ServerResponse.success(userService.findQuestionByUsername(username));
     }
 }
 

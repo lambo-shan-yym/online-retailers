@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletResponse;
  * @Version: 1.0
  */
 public class CookieUtil {
-    public static  void setToken(HttpServletResponse response){
-        Cookie cookie =new Cookie(Constants.COOKIE_TOKEN, UUIDUtil.uuid());
+    public static  void setToken(HttpServletResponse response,String token){
+        Cookie cookie =new Cookie(Constants.COOKIE_TOKEN, token);
         cookie.setPath("/");
         cookie.setMaxAge(Constants.COOKIE_TOKEN_EXPIRE);
         response.addCookie(cookie);

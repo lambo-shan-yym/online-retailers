@@ -25,7 +25,9 @@ public enum ResponseCode {
 
     USER_ANSWER_NOT_RIGHT(5010007,"问题的答案错误" ),
     USER_USERNAME_PASSWORD_NOT_RIGHT(5010008, "密码不正确"),
-    USER_HAS_NOT_LOGIN(5010009,"用户未登录");
+    USER_HAS_NOT_LOGIN(5010009,"用户未登录"),
+    USER_TOKEN_HAS_EXPIRE(5010010,"用户token失效,请重新登录"),
+    USER_PASSWORD_OLD_NEW_NO_EQUAL(5010011, "新密码不能和旧密码一致"),
 
     ;
     private int code;
