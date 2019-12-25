@@ -4,8 +4,6 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.lambo.onlineretailers.error.LamboException;
 import lombok.Data;
 
-import java.io.Serializable;
-
 /**
  * @ClassName: ServerResponse
  * @Author: yym
@@ -25,7 +23,10 @@ public class ServerResponse<T>  {
 
     public ServerResponse() {
     }
-
+    private ServerResponse(int code,String msg) {
+        this.code = code;
+        this.msg = msg;
+    }
     private ServerResponse(ResponseCode responseCode) {
         this.code = responseCode.getCode();
         this.msg = responseCode.getMsg();
@@ -40,11 +41,16 @@ public class ServerResponse<T>  {
     public static <T> ServerResponse<T> success(T data) {
         return new ServerResponse(data);
     }
-
+    public static <T> ServerResponse<T> success() {
+        return new ServerResponse(ResponseCode.SUCCESS);
+    }
     public static ServerResponse error(ResponseCode responseCode) {
         return new ServerResponse(responseCode);
     }
+    public static ServerResponse error(int code,String msg) {
+        return new ServerResponse(code,msg);
+    }
     public static ServerResponse error(LamboException ex) {
-        return new ServerResponse(ex.getResponseCode());
+        return new ServerResponse(ex.getCode(),ex.getMessage());
     }
 }

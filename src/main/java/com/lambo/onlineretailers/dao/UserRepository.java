@@ -1,5 +1,6 @@
 package com.lambo.onlineretailers.dao;
 
+import com.lambo.onlineretailers.dto.UserDTO;
 import com.lambo.onlineretailers.entity.User;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -33,5 +34,7 @@ public interface UserRepository extends CrudRepository<User, Integer> {
    // void updatePasswordByUsername(String newPassoword,String username);
 
     int countByPasswordAndId(String password,String id);
+
+    User findByUsername(String username);
 
 }

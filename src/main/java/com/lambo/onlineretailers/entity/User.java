@@ -3,6 +3,8 @@ package com.lambo.onlineretailers.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -36,10 +38,17 @@ public class User {
 
     private String answer;
 
+    @Column(name = "register_time")
+    private Date registerTime;
+    @Column(name = "last_login_time")
+    private Date lastLoginTime;
+
     private Integer role;
 
     @Column(name = "create_time")
+    @CreationTimestamp
     private Date createTime;
+    @UpdateTimestamp
     @Column(name = "update_time")
     private Date updateTime;
 

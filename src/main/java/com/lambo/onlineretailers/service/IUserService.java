@@ -1,7 +1,7 @@
 package com.lambo.onlineretailers.service;
 
+import com.lambo.onlineretailers.dto.UserDTO;
 import com.lambo.onlineretailers.entity.User;
-import org.springframework.data.repository.query.Param;
 
 /**
  * @ClassName: IUserService
@@ -15,6 +15,13 @@ public interface IUserService {
 
     String findQuestionByUsername(String username);
 
-    public String findByUsernameAndQuestionAndAnswer(String username,String question,String answer) ;
+    public String checkAnswer(String username, String question, String answer);
+
+    UserDTO login(String username, String password);
+
+    public UserDTO register(UserDTO userDTO);
+
+    public UserDTO findByUsername(String username);
+
 
 }

@@ -11,19 +11,20 @@ import com.lambo.onlineretailers.common.ResponseCode;
  */
 public class LamboException extends RuntimeException {
 
-    private ResponseCode responseCode;
+    private int code;
 
     public LamboException(ResponseCode responseCode) {
         super(responseCode.getMsg());
-        this.responseCode = responseCode;
+        this.code = responseCode.getCode();
     }
 
     public LamboException(ResponseCode responseCode, String msg) {
         super(String.format(responseCode.getMsg(), msg));
-        this.responseCode = responseCode;
+        this.code = responseCode.getCode();
     }
 
-    public ResponseCode getResponseCode() {
-        return responseCode;
+    public int getCode() {
+        return code;
     }
+
 }

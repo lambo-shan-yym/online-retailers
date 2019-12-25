@@ -13,4 +13,8 @@ public enum UserRoleEnum {
     UserRoleEnum(int roleCode) {
         this.roleCode = roleCode;
     }
+
+    public int getRoleCode() {
+        return roleCode;
+    }
 }
