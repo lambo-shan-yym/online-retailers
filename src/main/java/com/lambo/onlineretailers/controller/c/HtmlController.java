@@ -2,6 +2,7 @@ package com.lambo.onlineretailers.controller.c;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * @ClassName: HtmlController
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
  * @Version: 1.0
  */
 @Controller
+@RequestMapping(value = "/c")
 public class HtmlController {
 
     @GetMapping("/index")

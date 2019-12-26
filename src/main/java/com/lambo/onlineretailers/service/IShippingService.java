@@ -1,5 +1,9 @@
 package com.lambo.onlineretailers.service;
 
+import com.lambo.onlineretailers.dto.ShippingDTO;
+import com.lambo.onlineretailers.entity.Shipping;
+import org.springframework.beans.BeanUtils;
+
 /**
  * @ClassName: ICategoryService
  * @Author: yym
@@ -8,4 +12,12 @@ package com.lambo.onlineretailers.service;
  * @Version: 1.0
  */
 public interface IShippingService {
+
+    public Shipping add(ShippingDTO shippingDTO, Integer userId);
+
+    public Shipping update(ShippingDTO shippingDTO,Integer id,Integer userId);
+
+    public Shipping findById(Integer id, Integer userId) ;
+
+    public Shipping deleteById(Integer id, Integer userId);
 }

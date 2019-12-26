@@ -30,7 +30,12 @@ public enum ResponseCode {
     USER_PASSWORD_OLD_NEW_NO_EQUAL(5010011, "新密码不能和旧密码一致"),
 
     CATEGORY_NOT_EXIST(5020001, "商城分类不存在"),
-    AUTH_DENIED(403, "授权受限（无权限或IP地址受限等）");
+    AUTH_DENIED(403, "授权受限（无权限或IP地址受限等）"),
+
+
+    SHIPPING_NOT_EXIST(5030001,"收货地址不存在"),
+
+    ;
     private int code;
 
     private String msg;

@@ -4,6 +4,7 @@ import com.lambo.onlineretailers.dto.CategoryDTO;
 import com.lambo.onlineretailers.entity.Category;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @ClassName: ICategoryService
@@ -23,4 +24,7 @@ public interface ICategoryService {
     List<Category> findByParentId(Integer parentId);
 
     Category findById(Integer id);
+
+    List<Integer> selectCategoryAndChildById(Integer categoryId);
+
 }

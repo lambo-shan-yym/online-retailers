@@ -1,7 +1,9 @@
 package com.lambo.onlineretailers.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.lambo.onlineretailers.validator.InsertValidator;
 import com.lambo.onlineretailers.validator.IsMobile;
+import com.lambo.onlineretailers.validator.UpdateValidator;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,6 +13,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.Column;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 
@@ -28,19 +31,19 @@ import java.util.Date;
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class UserDTO {
 
-    @NotEmpty(message = "用户名不能为空")
+    @NotBlank(message = "用户名不能为空",groups = {InsertValidator.class})
     private String username;
 
-    @NotEmpty(message = "密码不能为空")
-    @Length(min=6,max = 16,message = "密码长度最小为6,最大为16")
+    @NotBlank(message = "密码不能为空",groups = {InsertValidator.class})
+    @Length(min=6,max = 16,message = "密码长度最小为6,最大为16",groups = {InsertValidator.class, UpdateValidator.class})
     private String password;
 
-    @NotEmpty(message = "邮箱不能为空")
-    @Email(message = "邮箱格式不正确")
+    @NotBlank(message = "邮箱不能为空",groups = {InsertValidator.class})
+    @Email(message = "邮箱格式不正确",groups = {InsertValidator.class,UpdateValidator.class})
     private String email;
 
-    @NotEmpty(message = "手机不能为空")
-    @IsMobile
+    @NotBlank(message = "手机不能为空",groups = {InsertValidator.class})
+    @IsMobile(groups = {InsertValidator.class,UpdateValidator.class})
     private String phone;
 
     private String question;
@@ -48,11 +51,5 @@ public class UserDTO {
     private String answer;
 
     private Integer role;
-    @Column(name = "create_time")
-    @CreationTimestamp
-    private Date createTime;
-    @UpdateTimestamp
-    @Column(name = "update_time")
-    private Date updateTime;
 
 }

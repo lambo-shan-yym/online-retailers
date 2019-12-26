@@ -5,6 +5,8 @@ import com.lambo.onlineretailers.dto.CategoryDTO;
 import com.lambo.onlineretailers.entity.User;
 import com.lambo.onlineretailers.page.SystemRequestHolder;
 import com.lambo.onlineretailers.service.ICategoryService;
+import com.lambo.onlineretailers.validator.InsertValidator;
+import com.lambo.onlineretailers.validator.UpdateValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -26,13 +28,13 @@ public class CategoryMController {
     private ICategoryService categoryService;
 
     @PostMapping(value = "")
-    public ServerResponse save(@Validated @RequestBody CategoryDTO categoryDTO, User user) {
+    public ServerResponse save(@Validated(value = InsertValidator.class) @RequestBody CategoryDTO categoryDTO, User user) {
         return ServerResponse.success(categoryService.save(categoryDTO));
     }
 
     @PutMapping("/{id:\\d+}")
     public ServerResponse update(@PathVariable(name = "id") Integer id,
-                                 @Validated @RequestBody CategoryDTO categoryDTO, User user) {
+                                 @Validated(value = UpdateValidator.class) @RequestBody CategoryDTO categoryDTO, User user) {
         return ServerResponse.success(categoryService.update(id, categoryDTO));
     }
 
@@ -51,4 +53,15 @@ public class CategoryMController {
         SystemRequestHolder.initRequestHolder(request);
         return ServerResponse.success(SystemRequestHolder.getPageable());
     }
+
+    @GetMapping("/get_parallel_category")
+    public ServerResponse getChildParallelCategory(@RequestParam(value = "parent_id",defaultValue = "0") Integer parentId){
+        return ServerResponse.success(categoryService.findByParentId(parentId));
+    }
+    @GetMapping("/get_deep_category")
+    public ServerResponse getCategoryAndDeepChildCategory(@RequestParam(value = "category_id",defaultValue = "0") Integer categoryId){
+        return ServerResponse.success(categoryService.selectCategoryAndChildById(categoryId));
+    }
+
+
 }

@@ -10,7 +10,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.*;
 
 /**
  * @ClassName: ICategoryService
@@ -59,6 +59,28 @@ public class CategoryServiceImpl implements ICategoryService {
         return checkCategory(id);
     }
 
+    @Override
+    public List<Integer> selectCategoryAndChildById(Integer categoryId) {
+        if(categoryId==null){
+            return Collections.EMPTY_LIST;
+        }
+        Set<Category> categorySet = findChildCategory(new HashSet<>(), categoryId);
+
+        List<Integer> categoryList = new ArrayList<>();
+        categorySet.forEach(item->categoryList.add(item.getId()));
+        return categoryList;
+    }
+
+
+    public Set<Category> findChildCategory(Set<Category> categorySet,Integer categoryId){
+        Category category =categoryRepository.getOne(categoryId);
+        if(category!=null){
+            categorySet.add(category);
+        }
+        List<Category> categoryList = categoryRepository.findByParentId(category.getId());
+        categoryList.forEach(item->findChildCategory(categorySet,item.getId()));
+        return categorySet;
+    }
     public Category checkCategory(Integer id) {
         Category category = categoryRepository.findById(id).orElseThrow(()->new LamboException(ResponseCode.CATEGORY_NOT_EXIST));
         return category;
