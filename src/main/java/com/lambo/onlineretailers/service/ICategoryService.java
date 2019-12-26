@@ -1,5 +1,10 @@
 package com.lambo.onlineretailers.service;
 
+import com.lambo.onlineretailers.dto.CategoryDTO;
+import com.lambo.onlineretailers.entity.Category;
+
+import java.util.List;
+
 /**
  * @ClassName: ICategoryService
  * @Author: yym
@@ -8,4 +13,14 @@ package com.lambo.onlineretailers.service;
  * @Version: 1.0
  */
 public interface ICategoryService {
+
+    Category save(CategoryDTO category);
+
+    Category update(Integer id,CategoryDTO category);
+
+    Category deleteById(Integer id);
+
+    List<Category> findByParentId(Integer parentId);
+
+    Category findById(Integer id);
 }

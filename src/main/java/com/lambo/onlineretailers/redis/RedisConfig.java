@@ -31,6 +31,9 @@ public class RedisConfig {
     @Value("${spring.redis.jedis.pool.max-wait}")
     private long maxWaitMillis;
 
+    @Value("${spring.redis.jedis.pool.min-idle}")
+    private int minIdle;
+
     @Value("${spring.redis.password}")
     private String password;
 

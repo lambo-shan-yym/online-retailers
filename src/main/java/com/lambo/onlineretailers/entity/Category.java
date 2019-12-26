@@ -1,8 +1,13 @@
 package com.lambo.onlineretailers.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -19,6 +24,9 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@DynamicUpdate
+@JsonIgnoreProperties(value = { "hibernateLazyInitializer"})
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,7 +43,9 @@ public class Category {
     private Integer sortOrder;
 
     @Column(name = "create_time")
+    @CreationTimestamp
     private Date createTime;
+    @UpdateTimestamp
     @Column(name = "update_time")
     private Date updateTime;
 }

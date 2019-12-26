@@ -351,7 +351,7 @@ ul.menu_r li a:hover, ul.menu_r li a.now{
 }
 .banner .a_bigImg{ position:absolute; left:0px; top:0px; display:none; width:850px; height:430px; overflow:hidden; }
 .banner .a_bigImg .name{
-	width:850px; height:80px; line-height:80px; overflow:hidden; background:url(/images/b_name.png) repeat-x center top; color:#333333; font-size:20px; text-align:center; position:absolute; left:0; bottom:40px;
+	width:850px; height:80px; line-height:80px; overflow:hidden; background:url(/images/b_name.png) repeat-x center top; color:#333333; fonts-size:20px; text-align:center; position:absolute; left:0; bottom:40px;
 }
 .banner .ul_change_a2{ position:absolute; left:10px; bottom:15px; overflow:hidden; text-align:center; }
 .banner .ul_change_a2 li{

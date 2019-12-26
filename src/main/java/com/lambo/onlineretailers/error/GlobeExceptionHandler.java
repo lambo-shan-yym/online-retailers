@@ -32,6 +32,7 @@ public class GlobeExceptionHandler {
             return ServerResponse.error(ResponseCode.INVALID_ARGUMENT.getCode(),msg);
         }
         log.error("【服务器发送异常】:{}",ex.getMessage());
+        ex.printStackTrace();
         return ServerResponse.error(ResponseCode.SERVER_ERROR);
     }
 }
