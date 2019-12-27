@@ -75,12 +75,13 @@ public class CategoryServiceImpl implements ICategoryService {
 
 
     public Set<Category> findChildCategory(Set<Category> categorySet,Integer categoryId){
-        Category category =categoryRepository.getOne(categoryId);
+        Category category = checkCategory(categoryId);
+
         if(category!=null){
             categorySet.add(category);
+            List<Category> categoryList = categoryRepository.findByParentId(categoryId);
+            categoryList.forEach(item->findChildCategory(categorySet,item.getId()));
         }
-        List<Category> categoryList = categoryRepository.findByParentId(category.getId());
-        categoryList.forEach(item->findChildCategory(categorySet,item.getId()));
         return categorySet;
     }
     public Category checkCategory(Integer id) {

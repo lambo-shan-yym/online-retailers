@@ -4,6 +4,7 @@ import com.lambo.onlineretailers.common.ResponseCode;
 import com.lambo.onlineretailers.dao.ProductRepository;
 import com.lambo.onlineretailers.dao.SpecificationOperation;
 import com.lambo.onlineretailers.dao.specification.EqualSpecification;
+import com.lambo.onlineretailers.dao.specification.InSpecification;
 import com.lambo.onlineretailers.dao.specification.SpecificationHelper;
 import com.lambo.onlineretailers.dao.specification.StringSpecification;
 import com.lambo.onlineretailers.dto.ProductDTO;
@@ -68,24 +69,19 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     public Page<Product> queryProduct(ProductParam productParam) {
-      /*  Specification<Product> specification = new Specification<Product>() {
-            @Nullable
-            @Override
-            public Predicate toPredicate(Root<Product> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder cb) {
-                List<Predicate> predicates = new ArrayList<>();
-                if (StringUtils.isNotBlank(productParam.getName())) {
-                    predicates.add(cb.like(root.get("name"), productParam.getName() + "%"));
-                }
-                return cb.and(predicates.toArray(new Predicate[predicates.size()]));
-            }
-        };*/
         List<Specification<Product>> list = new ArrayList<>();
-        if(productParam.getStatus()!=null){
-            list.add(new EqualSpecification<>("status",productParam.getStatus()));
+        if (productParam.getStatus() != null) {
+            list.add(new EqualSpecification<>("status", productParam.getStatus()));
         }
-        if (StringUtils.isNotBlank(productParam.getName())) {
+        if (productParam.getCategoryId() != null) {
+            List<Integer> categoryIdList = categoryService.selectCategoryAndChildById(productParam.getCategoryId());
+            if (categoryIdList != null&&!categoryIdList.isEmpty()) {
+                list.add(new InSpecification("categoryId", categoryIdList.toArray(new Integer[categoryIdList.size()])));
+            }
+        }
+        if (StringUtils.isNotBlank(productParam.getKeyword())) {
             list.add(new StringSpecification("name",
-                    SpecificationOperation.LOGICAL_OPERATOR_START_WITH, productParam.getName()));
+                    SpecificationOperation.LOGICAL_OPERATOR_START_WITH, productParam.getKeyword()));
         }
         return productRepository.findAll(SpecificationHelper.and(list), SystemRequestHolder.getPageable());
     }
