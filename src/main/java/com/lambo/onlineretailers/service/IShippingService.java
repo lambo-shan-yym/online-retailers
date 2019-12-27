@@ -2,7 +2,8 @@ package com.lambo.onlineretailers.service;
 
 import com.lambo.onlineretailers.dto.ShippingDTO;
 import com.lambo.onlineretailers.entity.Shipping;
-import org.springframework.beans.BeanUtils;
+
+import java.util.List;
 
 /**
  * @ClassName: ICategoryService
@@ -20,4 +21,6 @@ public interface IShippingService {
     public Shipping findById(Integer id, Integer userId) ;
 
     public Shipping deleteById(Integer id, Integer userId);
+
+    public List<Shipping> findList();
 }

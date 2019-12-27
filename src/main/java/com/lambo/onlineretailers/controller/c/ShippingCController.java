@@ -39,4 +39,8 @@ public class ShippingCController {
         return ServerResponse.success(shippingService.deleteById(id,user.getId()));
     }
 
+    @GetMapping(value = "")
+    public ServerResponse findList(){
+        return ServerResponse.success(shippingService.findList());
+    }
 }

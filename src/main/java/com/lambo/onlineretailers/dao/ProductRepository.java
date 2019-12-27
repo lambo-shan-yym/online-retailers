@@ -2,6 +2,7 @@ package com.lambo.onlineretailers.dao;
 
 import com.lambo.onlineretailers.entity.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 /**
  * @ClassName: Category
@@ -10,5 +11,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @Date: 2019/12/24 22:38
  * @Version: 1.0
  */
-public interface ProductRepository extends JpaRepository<Product,Integer>{
+public interface ProductRepository extends JpaRepository<Product,Integer>,JpaSpecificationExecutor<Product>{
 }

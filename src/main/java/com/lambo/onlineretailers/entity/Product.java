@@ -1,8 +1,13 @@
 package com.lambo.onlineretailers.entity;
 
+import com.lambo.onlineretailers.enums.ProductStatusEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -20,6 +25,8 @@ import java.util.Date;
 @Table
 @AllArgsConstructor
 @NoArgsConstructor
+@DynamicUpdate
+@DynamicInsert
 public class Product {
 
     @Id
@@ -45,9 +52,11 @@ public class Product {
 
     private Integer stock;
 
-    private Integer status;
+    private Integer status = ProductStatusEnum.OFF.getCode();
     @Column(name = "create_time")
+    @CreationTimestamp
     private Date createTime;
     @Column(name = "update_time")
+    @UpdateTimestamp
     private Date updateTime;
 }

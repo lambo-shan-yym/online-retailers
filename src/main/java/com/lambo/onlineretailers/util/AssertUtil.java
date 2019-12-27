@@ -23,4 +23,16 @@ public class AssertUtil {
             throw new LamboException(ResponseCode.REQUIRE_ARGUMENT,message);
         }
     }
+
+    /**
+     * 断言 正则表达式匹配
+     * @param str
+     * @param message
+     * @author yym
+     */
+    public static void isMatches(String str, String regex, String message) {
+        if (!str.matches(regex)) {
+            throw new LamboException(ResponseCode.INVALID_ARGUMENT, message );
+        }
+    }
 }

@@ -2,9 +2,10 @@ package com.lambo.onlineretailers.service;
 
 import com.lambo.onlineretailers.dto.CategoryDTO;
 import com.lambo.onlineretailers.entity.Category;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * @ClassName: ICategoryService
@@ -27,4 +28,7 @@ public interface ICategoryService {
 
     List<Integer> selectCategoryAndChildById(Integer categoryId);
 
+    Category checkCategory(Integer id);
+
+    Page<Category> page(Pageable pageable);
 }

@@ -2,12 +2,14 @@ package com.lambo.onlineretailers.controller.manager;
 
 import com.lambo.onlineretailers.common.ServerResponse;
 import com.lambo.onlineretailers.dto.CategoryDTO;
+import com.lambo.onlineretailers.entity.Category;
 import com.lambo.onlineretailers.entity.User;
 import com.lambo.onlineretailers.page.SystemRequestHolder;
 import com.lambo.onlineretailers.service.ICategoryService;
 import com.lambo.onlineretailers.validator.InsertValidator;
 import com.lambo.onlineretailers.validator.UpdateValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -51,7 +53,8 @@ public class CategoryMController {
     @GetMapping
     public ServerResponse getList(HttpServletRequest request) {
         SystemRequestHolder.initRequestHolder(request);
-        return ServerResponse.success(SystemRequestHolder.getPageable());
+        Page<Category> page = categoryService.page(SystemRequestHolder.getPageable());
+        return ServerResponse.success(page);
     }
 
     @GetMapping("/get_parallel_category")

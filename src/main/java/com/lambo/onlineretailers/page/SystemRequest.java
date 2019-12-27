@@ -17,7 +17,7 @@ public class SystemRequest implements Serializable {
     private int pageSize;
     private int pageOffset;
     private String sort;
-    private String order;
+    private String order[];
 
     public HttpServletRequest getRequest() {
         return request;
@@ -36,7 +36,7 @@ public class SystemRequest implements Serializable {
     }
 
     public int getPageOffset() {
-        return (pageOffset <= 1) ? 1 : pageOffset;
+        return (pageOffset <= 0) ? 0 : pageOffset;
     }
 
     public void setPageOffset(int pageOffset) {
@@ -51,11 +51,11 @@ public class SystemRequest implements Serializable {
         this.sort = sort;
     }
 
-    public String getOrder() {
+    public String[] getOrder() {
         return order;
     }
 
-    public void setOrder(String order) {
+    public void setOrder(String[] order) {
         this.order = order;
     }
 

@@ -35,6 +35,8 @@ public enum ResponseCode {
 
     SHIPPING_NOT_EXIST(5030001,"收货地址不存在"),
 
+
+    PRODUCT_NOT_EXIST(5040001,"商品信息不存在"),
     ;
     private int code;
 

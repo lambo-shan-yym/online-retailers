@@ -8,6 +8,8 @@ import com.lambo.onlineretailers.error.LamboException;
 import com.lambo.onlineretailers.service.ICategoryService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -84,5 +86,10 @@ public class CategoryServiceImpl implements ICategoryService {
     public Category checkCategory(Integer id) {
         Category category = categoryRepository.findById(id).orElseThrow(()->new LamboException(ResponseCode.CATEGORY_NOT_EXIST));
         return category;
+    }
+
+    @Override
+    public Page<Category> page(Pageable pageable) {
+        return categoryRepository.findAll(pageable);
     }
 }

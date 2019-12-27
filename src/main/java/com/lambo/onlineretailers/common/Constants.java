@@ -15,4 +15,5 @@ public class Constants {
 
     public static final String COOKIE_TOKEN="token";
     public static final int COOKIE_TOKEN_EXPIRE=60*60*24*2;
+
 }

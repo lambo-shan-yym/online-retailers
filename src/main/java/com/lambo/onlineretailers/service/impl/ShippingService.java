@@ -3,13 +3,14 @@ package com.lambo.onlineretailers.service.impl;
 import com.lambo.onlineretailers.common.ResponseCode;
 import com.lambo.onlineretailers.dao.ShippingRepository;
 import com.lambo.onlineretailers.dto.ShippingDTO;
-import com.lambo.onlineretailers.entity.Category;
 import com.lambo.onlineretailers.entity.Shipping;
 import com.lambo.onlineretailers.error.LamboException;
 import com.lambo.onlineretailers.service.IShippingService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author lambo
@@ -44,6 +45,10 @@ public class ShippingService implements IShippingService {
 
     }
 
+    @Override
+    public List<Shipping> findList() {
+        return shippingRepository.findAll();
+    }
 
 
     private Shipping checkById(Integer id,Integer userId) {
