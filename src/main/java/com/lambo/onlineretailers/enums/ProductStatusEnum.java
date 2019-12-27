@@ -13,8 +13,8 @@ import java.util.List;
  * @Version: 1.0
  */
 public enum  ProductStatusEnum {
-    OFF(1,"未上架"),
-    ON(2,"上架"),
+    OFF(2,"未上架"),
+    ON(1,"上架"),
     ;
     private int code;
     private String msg;

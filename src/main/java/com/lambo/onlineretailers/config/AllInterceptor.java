@@ -1,12 +1,15 @@
 package com.lambo.onlineretailers.config;
 
+import com.lambo.onlineretailers.annotation.NeedPage;
 import com.lambo.onlineretailers.common.ResponseCode;
 import com.lambo.onlineretailers.dto.UserDTO;
 import com.lambo.onlineretailers.enums.UserRoleEnum;
 import com.lambo.onlineretailers.error.LamboException;
+import com.lambo.onlineretailers.page.SystemRequestHolder;
 import com.lambo.onlineretailers.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
@@ -39,6 +42,13 @@ public class AllInterceptor implements HandlerInterceptor {
         }
         if(uri.contains("/c/")&& UserRoleEnum.NORMAL_USER.getRoleCode()!=userDTO.getRole()){
             throw new LamboException(ResponseCode.AUTH_DENIED);
+        }
+
+        HandlerMethod handlerMethod = (HandlerMethod) handler;
+        NeedPage needPage = handlerMethod.getMethodAnnotation(NeedPage.class);
+        //如果@NeedPage (request=false) 这里的needPage为false,即不用进行分页信息获取，@NeedPage默认为前面定义的true　　
+        if(needPage!=null&&needPage.request()){
+            SystemRequestHolder.initRequestHolder(request);
         }
         return true;
     }

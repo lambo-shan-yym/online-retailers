@@ -3,8 +3,7 @@ package com.lambo.onlineretailers.service;
 import com.lambo.onlineretailers.dto.ProductDTO;
 import com.lambo.onlineretailers.dto.query.ProductParam;
 import com.lambo.onlineretailers.entity.Product;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 /**
  * @ClassName: ICategoryService
@@ -23,5 +22,5 @@ public interface IProductService {
 
     Product deleteById(Integer id);
 
-    List<Product> queryProduct(ProductParam productParam);
+    Page<Product> queryProduct(ProductParam productParam);
 }

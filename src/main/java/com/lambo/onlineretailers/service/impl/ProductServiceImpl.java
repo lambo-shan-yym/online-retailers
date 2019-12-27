@@ -3,18 +3,21 @@ package com.lambo.onlineretailers.service.impl;
 import com.lambo.onlineretailers.common.ResponseCode;
 import com.lambo.onlineretailers.dao.ProductRepository;
 import com.lambo.onlineretailers.dao.SpecificationOperation;
+import com.lambo.onlineretailers.dao.specification.EqualSpecification;
 import com.lambo.onlineretailers.dao.specification.SpecificationHelper;
 import com.lambo.onlineretailers.dao.specification.StringSpecification;
 import com.lambo.onlineretailers.dto.ProductDTO;
 import com.lambo.onlineretailers.dto.query.ProductParam;
 import com.lambo.onlineretailers.entity.Product;
 import com.lambo.onlineretailers.error.LamboException;
+import com.lambo.onlineretailers.page.SystemRequestHolder;
 import com.lambo.onlineretailers.service.ICategoryService;
 import com.lambo.onlineretailers.service.IProductService;
 import com.lambo.onlineretailers.util.MyBeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -64,7 +67,7 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    public List<Product> queryProduct(ProductParam productParam) {
+    public Page<Product> queryProduct(ProductParam productParam) {
       /*  Specification<Product> specification = new Specification<Product>() {
             @Nullable
             @Override
@@ -77,11 +80,14 @@ public class ProductServiceImpl implements IProductService {
             }
         };*/
         List<Specification<Product>> list = new ArrayList<>();
+        if(productParam.getStatus()!=null){
+            list.add(new EqualSpecification<>("status",productParam.getStatus()));
+        }
         if (StringUtils.isNotBlank(productParam.getName())) {
             list.add(new StringSpecification("name",
                     SpecificationOperation.LOGICAL_OPERATOR_START_WITH, productParam.getName()));
         }
-        return productRepository.findAll(SpecificationHelper.and(list));
+        return productRepository.findAll(SpecificationHelper.and(list), SystemRequestHolder.getPageable());
     }
 
     private Product checkById(Integer id) {

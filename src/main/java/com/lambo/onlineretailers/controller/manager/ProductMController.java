@@ -1,5 +1,6 @@
 package com.lambo.onlineretailers.controller.manager;
 
+import com.lambo.onlineretailers.annotation.NeedPage;
 import com.lambo.onlineretailers.common.ServerResponse;
 import com.lambo.onlineretailers.dto.ProductDTO;
 import com.lambo.onlineretailers.dto.query.ProductParam;
@@ -9,6 +10,8 @@ import com.lambo.onlineretailers.validator.UpdateValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @ClassName: ProductMController
@@ -45,7 +48,9 @@ public class ProductMController {
     }
 
     @GetMapping
-    public ServerResponse queryProduct(ProductParam productParam){
+    @NeedPage
+    public ServerResponse queryProduct(HttpServletRequest request,ProductParam productParam){
+       // SystemRequestHolder.initRequestHolder(request);
         return ServerResponse.success(productService.queryProduct(productParam));
     }
 }
